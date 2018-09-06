@@ -3,10 +3,11 @@ module Main exposing (main)
 import Browser
 import Html exposing (Html, button, div, text)
 import Html.Events exposing (onClick)
+import List exposing (indexedMap)
+import String exposing (toList)
 
 type alias Model =
-    { word : List(String)
-    }
+    { word : List(String)}
 
 
 -- type Cell
@@ -16,7 +17,7 @@ type alias Model =
 
 initialModel : Model
 initialModel =
-    { word = ["cat", "dog", "mouse"]
+    { word = ["cat"]
         -- [ [ Full 2, Empty, Empty, Full 2 ]
         -- , [ Empty, Full 2, Empty, Empty ]
         -- , [ Empty, Empty, Empty, Empty ]
@@ -25,12 +26,13 @@ initialModel =
     }
 removeCharacter : List(String) -> List(String)
 removeCharacter word =
+
     case word of
         [] -> []
         
         x :: xs ->
-            if (x == "mouse") then
-                xs
+            if (x == "cat") then
+              x :: xs ++ [ "dog" ]
             else 
                 x :: removeCharacter xs
 type Msg
@@ -53,10 +55,10 @@ update msg model =
 view : Model -> Html Msg
 view model =
     case model.word of
-        ["cat", "dog", "mouse"] ->
+        [word] ->
             div
                 [ ]
-                [ div [] [ text (Debug.toString ["cat", "dog", "mouse"])]
+                [ div [] [ text (Debug.toString [word])]
                 , button [ onClick ParseWord ] [ text "parse word"]
                 ]
         ["cat","dog"] -> 
